@@ -278,7 +278,7 @@ do
     local offset = 0
     local payload = subtree:add(SET_OBJECT_INFO, buf())
 
-    payload:add_le(soi.floatdata, buf(offset, 4))
+    payload:add_le(soi.floatData, buf(offset, 4))
     offset = offset + 4
 
     local attrNameLen = buf(offset, 2)
@@ -291,7 +291,7 @@ do
     local offset = 0
     local payload = subtree:add(SET_OBJECT_INFO, buf())
 
-    payload:add_le(soi.intdata, buf(offset, 4))
+    payload:add_le(soi.intData, buf(offset, 4))
     offset = offset + 4
 
     local attrNameLen = buf(offset, 2)
@@ -309,6 +309,7 @@ do
     offset = offset + 2
     if strDataLen > 0 then
       payload:add_le(soi.strData, buf(offset, strDataLen))
+      offset = offset + strDataLen
     end
 
     local attrNameLen = buf(offset, 2)
@@ -360,8 +361,8 @@ do
   function getObjectInfoFloatArrayRes(buf, subtree)
     local payload = subtree:add(GET_OBJECT_INFO, buf())
     local offset = 0
-    local arrLen = buf(offset, 4)
-    paylaod:add(goi.arrLen, arrLen)
+    local arrLen = buf(offset, 4):uint()
+    payload:add(goi.arrLen, buf(offset, 4))
     offset = offset + 4
 
     for i=1,arrLen do
@@ -458,7 +459,7 @@ do
 
     local offset = 0
     payload:add_le(go.opcode, buf(offset, 2))
-    offset = offset + 4
+    offset = offset + 2
     local nameLen = buf(offset, 2)
     offset = offset + 2
     payload:add_le(go.nameLen, nameLen)
