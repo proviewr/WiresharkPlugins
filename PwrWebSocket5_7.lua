@@ -265,57 +265,57 @@ do
     local offset = 0
     local payload = subtree:add(SET_OBJECT_INFO, buf())
 
-    payload:add_le(soi.boolData, buf(offset, 1))
+    payload:add(soi.boolData, buf(offset, 1))
     offset = offset + 1
 
     local attrNameLen = buf(offset, 4)
-    payload:add_le(soi.attrNameLen, attrNameLen)
+    payload:add(soi.attrNameLen, attrNameLen)
     offset = offset + 4
-    payload:add_le(soi.attrName, buf(offset, attrNameLen:le_uint()))
+    payload:add(soi.attrName, buf(offset, attrNameLen:uint()))
   end
 
   function setObjectInfoFloatReq(buf, subtree)
     local offset = 0
     local payload = subtree:add(SET_OBJECT_INFO, buf())
 
-    payload:add_le(soi.floatData, buf(offset, 4))
+    payload:add(soi.floatData, buf(offset, 4))
     offset = offset + 4
 
     local attrNameLen = buf(offset, 4)
-    payload:add_le(soi.attrNameLen, attrNameLen)
+    payload:add(soi.attrNameLen, attrNameLen)
     offset = offset + 4
-    payload:add_le(soi.attrName, buf(offset, attrNameLen:le_uint()))
+    payload:add(soi.attrName, buf(offset, attrNameLen:uint()))
   end
 
   function setObjectInfoIntReq(buf, subtree)
     local offset = 0
     local payload = subtree:add(SET_OBJECT_INFO, buf())
 
-    payload:add_le(soi.intData, buf(offset, 4))
+    payload:add(soi.intData, buf(offset, 4))
     offset = offset + 4
 
     local attrNameLen = buf(offset, 4)
-    payload:add_le(soi.attrNameLen, attrNameLen)
+    payload:add(soi.attrNameLen, attrNameLen)
     offset = offset + 4
-    payload:add_le(soi.attrName, buf(offset, attrNameLen:le_uint()))
+    payload:add(soi.attrName, buf(offset, attrNameLen:uint()))
   end
 
   function setObjectInfoStrReq(buf, subtree)
     local offset = 0
     local payload = subtree:add(SET_OBJECT_INFO, buf())
 
-    local strDataLen = buf(offset, 4):le_uint()
-    payload:add_le(soi.strDataLen, buf(offset, 4))
+    local strDataLen = buf(offset, 4):uint()
+    payload:add(soi.strDataLen, buf(offset, 4))
     offset = offset + 4
     if strDataLen > 0 then
-      payload:add_le(soi.strData, buf(offset, strDataLen))
+      payload:add(soi.strData, buf(offset, strDataLen))
       offset = offset + strDataLen
     end
 
     local attrNameLen = buf(offset, 4)
-    payload:add_le(soi.attrNameLen, attrNameLen)
+    payload:add(soi.attrNameLen, attrNameLen)
     offset = offset + 4
-    payload:add_le(soi.attrName, buf(offset, attrNameLen:le_uint()))
+    payload:add(soi.attrName, buf(offset, attrNameLen:uint()))
   end
 
   -- Same for all four types (bool, float, int, str)
@@ -324,9 +324,9 @@ do
     local payload = subtree:add(GET_OBJECT_INFO, buf())
 
     local attrNameLen = buf(offset, 4)
-    payload:add_le(goi.attrNameLen, attrNameLen)
+    payload:add(goi.attrNameLen, attrNameLen)
     offset = offset + 4
-    payload:add_le(goi.attrName, buf(offset, attrNameLen:le_uint()))
+    payload:add(goi.attrName, buf(offset, attrNameLen:uint()))
   end
 
   function getObjectInfoBoolRes(buf, subtree)
@@ -349,13 +349,13 @@ do
     local offset = 0
     local payload = subtree:add(GET_OBJECT_INFO, buf())
 
-    payload:add_le(goi.arrLen, buf(offset, 4))
+    payload:add(goi.arrLen, buf(offset, 4))
     offset = offset + 4
 
     local attrNameLen = buf(offset, 4)
-    payload:add_le(goi.attrNameLen, attrNameLen)
+    payload:add(goi.attrNameLen, attrNameLen)
     offset = offset + 4
-    payload:add_le(goi.attrName, buf(offset, attrNameLen:le_uint()))
+    payload:add(goi.attrName, buf(offset, attrNameLen:uint()))
   end
 
   function getObjectInfoFloatArrayRes(buf, subtree)
@@ -376,29 +376,29 @@ do
 
     local offset = 0
     local attrNameLen = buf(offset, 4)
-    payload:add_le(toi.attrNameLen, attrNameLen)
+    payload:add(toi.attrNameLen, attrNameLen)
     offset = offset + 4
-    payload:add_le(toi.attrName, buf(offset, attrNameLen:le_uint()))
+    payload:add(toi.attrName, buf(offset, attrNameLen:uint()))
   end
 
   function refObjectInfoReq(buf, subtree)
     local payload = subtree:add(REF_OBJECT_INFO, buf())
     local offset = 0
 
-    payload:add_le(roi.subid, buf(offset, 4))
+    payload:add(roi.subid, buf(offset, 4))
     offset = offset + 4
-    payload:add_le(roi.elements, buf(offset, 4))
+    payload:add(roi.elements, buf(offset, 4))
     offset = offset + 4
 
     local nameLen = buf(offset, 4)
-    payload:add_le(roi.nameLen, nameLen)
+    payload:add(roi.nameLen, nameLen)
     offset = offset + 4
-    payload:add_le(roi.name, buf(offset, nameLen:le_uint()))
+    payload:add(roi.name, buf(offset, nameLen:uint()))
   end
 
   function unrefObjectInfoReq(buf, subtree)
     local payload = subtree:add(REF_OBJECT_INFO, buf())
-    payload:add_le(roi.subid, buf(0, 4))
+    payload:add(roi.subid, buf(0, 4))
   end
 
   function getObjectRefInfoAllRes(buf, subtree) --TODO
@@ -428,42 +428,42 @@ do
     local payload = subtree:add(GET_OBJECT, buf())
 
     local offset = 0
-    payload:add_le(go.opcode, buf(offset, 2))
+    payload:add(go.opcode, buf(offset, 2))
     offset = offset + 2
-    payload:add_le(go.vid, buf(offset, 4))
+    payload:add(go.vid, buf(offset, 4))
     offset = offset + 4
-    payload:add_le(go.oix, buf(offset, 4))
+    payload:add(go.oix, buf(offset, 4))
   end
 
   function getObjectFromARefReq(buf, subtree)
     local payload = subtree:add(GET_OBJECT, buf())
 
     local offset = 0
-    payload:add_le(go.opcode, buf(offset, 2))
+    payload:add(go.opcode, buf(offset, 2))
     offset = offset + 2
-    payload:add_le(go.vid, buf(offset, 4))
+    payload:add(go.vid, buf(offset, 4))
     offset = offset + 4
-    payload:add_le(go.oix, buf(offset, 4))
+    payload:add(go.oix, buf(offset, 4))
     offset = offset + 4
-    payload:add_le(go.offset, buf(offset, 4))
+    payload:add(go.offset, buf(offset, 4))
     offset = offset + 4
-    payload:add_le(go.body, buf(offset, 4))
+    payload:add(go.body, buf(offset, 4))
     offset = offset + 4
-    payload:add_le(go.size, buf(offset, 4))
+    payload:add(go.size, buf(offset, 4))
     offset = offset + 4
-    payload:add_le(go.flags, buf(offset, 4))
+    payload:add(go.flags, buf(offset, 4))
   end
 
   function getObjectFromNameReq(buf, subtree)
     local payload = subtree:add(GET_OBJECT, buf())
 
     local offset = 0
-    payload:add_le(go.opcode, buf(offset, 2))
+    payload:add(go.opcode, buf(offset, 2))
     offset = offset + 2
     local nameLen = buf(offset, 4)
     offset = offset + 4
-    payload:add_le(go.nameLen, nameLen)
-    payload:add_le(go.name, buf(offset, nameLen:le_uint()))
+    payload:add(go.nameLen, nameLen)
+    payload:add(go.name, buf(offset, nameLen:uint()))
   end
 
   --Client sends which fields it's interested in
@@ -526,7 +526,7 @@ do
 
   function mhSyncReq(buf, subtree)
     local payload = subtree:add(MH_SYNC, buf())
-    payload:add_le(mhsync.sync, buf(0, 4))
+    payload:add(mhsync.sync, buf(0, 4))
   end
 
   function mhSyncRes(buf, subtree)
@@ -726,34 +726,34 @@ do
     local payload = subtree:add(MH_ACK, buf())
     local offset = 0
 
-    payload:add_le(mhack.nix, buf(offset, 4))
+    payload:add(mhack.nix, buf(offset, 4))
     offset = offset + 4
-    payload:add_le(mhack.idx, buf(offset, 4))
+    payload:add(mhack.idx, buf(offset, 4))
     offset = offset + 4
 
     local birthTimeLen = buf(offset, 4)
-    payload:add_le(mhack.birthTimeLen, birthTimeLen)
+    payload:add(mhack.birthTimeLen, birthTimeLen)
     offset = offset + 4
-    payload:add_le(mhack.birthTime, buf(offset, birthTimeLen:le_uint()))
+    payload:add(mhack.birthTime, buf(offset, birthTimeLen:uint()))
   end
 
   function checkUserReq(buf, subtree)
     local offset = 0
     local payload = subtree:add(CHECK_USER, buf())
 
-    local usernameLen = buf(offset, 4):le_uint()
-    payload:add_le(cu.usernameLen, buf(offset, 4))
+    local usernameLen = buf(offset, 4):uint()
+    payload:add(cu.usernameLen, buf(offset, 4))
     offset = offset + 4
     if usernameLen > 0 then
-      payload:add_le(cu.username, buf(offset, usernameLen))
+      payload:add(cu.username, buf(offset, usernameLen))
     end
     offset = offset + usernameLen
 
-    local passwordLen = buf(offset, 4):le_uint()
-    payload:add_le(cu.passwordLen, buf(offset, 4))
+    local passwordLen = buf(offset, 4):uint()
+    payload:add(cu.passwordLen, buf(offset, 4))
     offset = offset + 4
     if passwordLen > 0 then
-      payload:add_le(cu.password, buf(offset, passwordLen))
+      payload:add(cu.password, buf(offset, passwordLen))
     end
   end
 
@@ -766,9 +766,9 @@ do
     local payload = subtree:add(GET_ALL_XTT_CHILDREN, buf())
 
     local offset = 0
-    payload:add_le(gaxc.vid, buf(offset, 4))
+    payload:add(gaxc.vid, buf(offset, 4))
     offset = offset + 4
-    payload:add_le(gaxc.oix, buf(offset, 4))
+    payload:add(gaxc.oix, buf(offset, 4))
   end
 
   function getAllXttChildrenRes(buf, subtree)
@@ -841,11 +841,11 @@ do
     local offset = 0
     local payload = subtree:add(GET_OPWIND_MENU, buf())
 
-    local opPlaceLen = buf(offset, 4):le_uint()
-    payload:add_le(gom.placeLen, buf(offset, 4))
+    local opPlaceLen = buf(offset, 4):uint()
+    payload:add(gom.placeLen, buf(offset, 4))
     offset = offset + 4
     if opPlaceLen > 0 then
-      payload:add_le(gom.place, buf(offset, opPlaceLen))
+      payload:add(gom.place, buf(offset, opPlaceLen))
     end
   end
 
@@ -947,11 +947,11 @@ do
     local payload = subtree:add(GET_ALL_CLASS_ATTRIBUTES, buf())
 
     local offset = 0
-    payload:add_le(gaca.cid, buf(offset, 4))
+    payload:add(gaca.cid, buf(offset, 4))
     offset = offset + 4
-    payload:add_le(gaca.vid, buf(offset, 4))
+    payload:add(gaca.vid, buf(offset, 4))
     offset = offset + 4
-    payload:add_le(gaca.oix, buf(offset, 4))
+    payload:add(gaca.oix, buf(offset, 4))
   end
 
   function getAllClassAttributesRes(buf, subtree)
@@ -1011,9 +1011,9 @@ do
     local payload = subtree:add(CRR_SIGNAL, buf())
 
     local offset = 0
-    payload:add_le(crr.vid, buf(offset, 4))
+    payload:add(crr.vid, buf(offset, 4))
     offset = offset + 4
-    payload:add_le(crr.oix, buf(offset, 4))
+    payload:add(crr.oix, buf(offset, 4))
   end
 
   function crrSignalRes(buf, subtree)
@@ -1068,7 +1068,7 @@ do
 
   function getMsgReq(buf, subtree)
     local payload = subtree:add(GET_MESSAGE, buf())
-    payload:add_le(gmt.msgid, buf(0, 4))
+    payload:add(gmt.msgid, buf(0, 4))
   end
 
   function getMsgRes(buf, subtree)
@@ -1141,12 +1141,12 @@ do
     local sts = 0
     -- add protocol fields to subtree
     local protocol_header = subtree:add(PROTOCOL_HEADER, buf(offset,6))
-    protocol_header:add_le(ph.opcode, buf(offset, 1))
+    protocol_header:add(ph.opcode, buf(offset, 1))
     offset = offset + 1
     if isReq then
-      protocol_header:add_le(ph.unusedOpcodes, buf(offset, 1))
+      protocol_header:add(ph.unusedOpcodes, buf(offset, 1))
       offset = offset + 1
-      protocol_header:add_le(ph.messageID, buf(offset, 4))
+      protocol_header:add(ph.messageID, buf(offset, 4))
       offset = offset + 4;
     else
       protocol_header:add(ph.messageID, buf(offset, 4))
