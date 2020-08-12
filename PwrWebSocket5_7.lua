@@ -61,7 +61,6 @@ do
 
   local ph = PROTOCOL_HEADER.fields
   ph.opcode = ProtoField.uint8("pwr.opcode", "OpCode", base.DEC)
-  ph.unusedOpcodes = ProtoField.uint8("pwr.unusedOpcodes", "Unused OpCodes", base.DEC)
   ph.messageID = ProtoField.uint32("pwr.messageID", "Message ID", base.DEC)
   ph.sts = ProtoField.uint32("pwr.sts", "Status", base.DEC)
 
@@ -1138,23 +1137,15 @@ do
     -- create subtree for websock
     subtree = root:add(pwr, buf(0))
     local offset = 0
-    local sts = 0
     -- add protocol fields to subtree
     local protocol_header = subtree:add(PROTOCOL_HEADER, buf(offset,6))
     protocol_header:add(ph.opcode, buf(offset, 1))
     offset = offset + 1
-    if isReq then
-      protocol_header:add(ph.unusedOpcodes, buf(offset, 1))
-      offset = offset + 1
-      protocol_header:add(ph.messageID, buf(offset, 4))
-      offset = offset + 4;
-    else
-      protocol_header:add(ph.messageID, buf(offset, 4))
-      offset = offset + 4;
-      sts = buf(offset, 4):uint()
-      protocol_header:add(ph.sts, buf(offset, 4))
-      offset = offset + 4
-    end
+    protocol_header:add(ph.messageID, buf(offset, 4))
+    offset = offset + 4;
+    local sts = buf(offset, 4):uint()
+    protocol_header:add(ph.sts, buf(offset, 4))
+    offset = offset + 4
 
     local messageTypeValue = t().value
     local messageType = messageTypes[messageTypeValue]
